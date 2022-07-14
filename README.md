@@ -1,4 +1,4 @@
 # RZToolbox
-RZToolbox is desinated for bilibili meme video creators to inspire on script/lyric writing and video data analysis. The toolbox is an idea merged from ChaonanRival and ChaonanSpider.
+RZToolbox is designated for bilibili meme video creators to inspire their script/lyric writing and video data analysis. The toolbox is an idea merged from ChaonanRival and ChaonanSpider.
 
 The toolbox is still under construction.
