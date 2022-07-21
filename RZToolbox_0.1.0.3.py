@@ -6,15 +6,16 @@ print('欢迎使用RZToolbox 0.1.0.3 Welcome! \n')
 
 
 BVnumber = input('请填写BV号 Please type the BVID\n') #请填写
-VideoNameShort = input('请填写视频简称 Please name your video\n') #请填写视频名字
-file_path_folder = input('请填写数据保存路径\nPlease type path of your folder for saving data\nExample: D:\Works\Videodata\n')
-file_path =  r"{}\{}_{}.txt".format(file_path_folder,BVnumber,VideoNameShort) #请写txt保存位置
-file_path_json = r"{}\{}_{}_json.txt".format(file_path_folder,BVnumber,VideoNameShort) #请写txt保存位置
+VideoNameShort = input('\n请填写视频简称 Please name your video\n') #请填写视频名字
+file_path_folder = input('\n请填写数据保存路径\nPlease type path of your folder for saving data\nExample: D:\Works\Videodata\n')
+file_path =  r"{}\{}_{}.txt".format(file_path_folder,BVnumber,VideoNameShort) #txt保存位置
+file_path_json = r"{}\{}_{}_json.txt".format(file_path_folder,BVnumber,VideoNameShort) #txt保存位置
 
+#---------------------------------------
+
+print('\n开始转换BV号 Start BVID transformation...')
 
 #----------------------------------------------------------------------------------------------------------
-
-
 #因为所知的API太垃圾，所以先bv转av
 
 
@@ -112,10 +113,8 @@ while True: #每隔 x+random.randint(-120,120) 秒钟访问一次指定视频的
                                     #wb+写入进制数据
                                     #w模式打开文件，如果文件中有数据，再次写入内容，会把原来的覆盖掉     
     
-    f.write(localtimeB)
-    f.write('\r')
-    f.write(result) # write 写入 
-    f.write('\r\n')
+    f.write(localtimeB + '\n' + result + '\n')
+    
                                     #writelines()函数 会将列表中的字符串写入文件中，但不会自动换行，如果需要换行，手动添加换行符
                                                     #参数 必须是一个只存放字符串的列
     f.close()              #关闭文件 
@@ -143,8 +142,6 @@ while True: #每隔 x+random.randint(-120,120) 秒钟访问一次指定视频的
     f.write(result_data_2) # write 写入 
     f.write("}")
     
-                                    #writelines()函数 会将列表中的字符串写入文件中，但不会自动换行，如果需要换行，手动添加换行符
-                                                    #参数 必须是一个只存放字符串的列
     f.close()              #关闭文件 
 
 
@@ -153,7 +150,7 @@ while True: #每隔 x+random.randint(-120,120) 秒钟访问一次指定视频的
 
 
 #20220207_需要修改的地方: 用V2ray进guaniukanyue代理（有问题），时间添加随机量（完成），每隔?分钟将文件保存成txt （DONE!）
-#20220208: 代理问题，在线人数api寻找，获得数据用beautiful soup处理后转csv，localtime刷新
+#20220208: 代理问题，在线人数api寻找
 
 #V0.1.0.1 更新：生成一个带时间的文件与一个纯json文件，为未来json处理做准备
 #V0.1 A stable version
