@@ -1,6 +1,8 @@
 # Made by RZStudio
 print('Made by RZStudio')
+time.sleep(2)
 print('欢迎使用RZToolbox 0.1.0.3 Welcome! \n')
+time.sleep(3)
 
 #---------------------------------------------------------------------------------------------------------
 
@@ -61,7 +63,7 @@ import random
 
 localtime = time.asctime( time.localtime(time.time()) )
 
-#ipList = ['119.6.144.73:81', '183.203.208.166:8118', '111.1.32.28:81'] #定义多个代理IP的方法，备用
+#ipList = ['xxx.xxx.xxx.xx:xx'] #定义多个代理IP的方法，备用
 proxy = {'http':'127.0.0.1:1080'} #妈的，有点问题，修不来
 
 cnt = 0
