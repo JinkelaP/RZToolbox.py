@@ -1,4 +1,6 @@
 # Made by RZStudio
+import time
+
 print('Made by RZStudio')
 time.sleep(2)
 print('欢迎使用RZToolbox 0.1.0.3 Welcome! \n')
@@ -56,7 +58,7 @@ AVnumber = bv_to_av(BVnumber)
 
 #接下来是爬虫部分
 
-import time
+
 from tkinter import N
 import urllib.request
 import random
