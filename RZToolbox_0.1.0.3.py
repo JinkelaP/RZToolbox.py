@@ -135,15 +135,15 @@ if __name__ == '__main__':
         # 生成dataframe
         df = pd.concat(dataframes, ignore_index=True)
 
+        # 新建两行
+        df['view/like'] = df['view'] / df['like']
+        df['view_trend'] = df['view'].diff()
 
         # 各种导
         df.to_json(current_video.get_path('', 'json'), orient='records')
         df.to_csv(current_video.get_path('', 'csv'),index=False)
         df.to_excel(current_video.get_path('', 'xlsx'),index=False)
 
-        # 新建两行
-        df['view/like'] = df['view'] / df['like']
-        df['view_trend'] = df['view'].diff()
         # 画图
         fig = plt.figure()  # 新建画布
         sns.set_theme('paper')  # 选择主题
