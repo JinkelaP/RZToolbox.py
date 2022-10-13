@@ -12,6 +12,7 @@ import urllib.request
 import pandas as pd  # 以下为老三样
 import numpy as np
 import matplotlib.pyplot as plt
+import pathlib
 
 
 BV2AV_API = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
@@ -21,7 +22,7 @@ Chrome/80.0.3987.149 Safari/537.36'}
 
 
 class VideoInfo(object):
-    def __init__(self, BVnumber, VideoNameShort='', OutFolder='') -> None:
+    def __init__(self, BVnumber, VideoNameShort='', OutFolder=pathlib.Path(__file__).parent.resolve()) -> None:
         self.bv = BVnumber
         self.alias = VideoNameShort
         self.out = OutFolder
@@ -40,7 +41,7 @@ AV号 AV\#: {}
         return r"{}_{}{}".format(self.bv, self.alias, ("_"+time if time != "" else ""))
 
     def get_path(self, time = '', extension='txt'):
-        return self.out + ('/' if self.out != '' else '') + self.get_filename(time) + '.' + extension
+        return self.out + ('/output') + self.get_filename(time) + '.' + extension
 
 def bv_to_av(bv):
     r = requests.get(BV2AV_API, {'bvid': bv}, headers=HEADER)
