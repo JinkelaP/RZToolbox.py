@@ -1,2 +1,6 @@
 jsonpath==0.82
 requests==2.27.1
+numpy
+pandas
+matplotlib
+openpyxl
