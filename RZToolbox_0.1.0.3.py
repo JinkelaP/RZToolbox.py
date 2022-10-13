@@ -12,7 +12,7 @@ import urllib.request
 import pandas as pd  # 以下为老三样
 import numpy as np
 import matplotlib.pyplot as plt
-import pathlib
+from pathlib import Path
 
 
 BV2AV_API = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
@@ -22,7 +22,7 @@ Chrome/80.0.3987.149 Safari/537.36'}
 
 
 class VideoInfo(object):
-    def __init__(self, BVnumber, VideoNameShort='', OutFolder=pathlib.Path(__file__).parent.resolve()) -> None:
+    def __init__(self, BVnumber, VideoNameShort='', OutFolder=str(Path(__file__).parent.resolve())) -> None:
         self.bv = BVnumber
         self.alias = VideoNameShort
         self.out = OutFolder
@@ -41,7 +41,7 @@ AV号 AV\#: {}
         return r"{}_{}{}".format(self.bv, self.alias, ("_"+time if time != "" else ""))
 
     def get_path(self, time = '', extension='txt'):
-        return self.out + ('/output') + self.get_filename(time) + '.' + extension
+        return self.out + '/' + self.get_filename(time) + '.' + extension
 
 def bv_to_av(bv):
     r = requests.get(BV2AV_API, {'bvid': bv}, headers=HEADER)
@@ -75,8 +75,10 @@ if __name__ == '__main__':
         VideoNameShort = input('\n请填写视频简称 Please name your video\n') #请填写视频名字
     
     file_path_folder = input('\n请填写数据保存路径\nPlease type path of your folder for saving data\nExample: D:\Works\Videodata\n')
-
-    current_video = VideoInfo(BVnumber, VideoNameShort, file_path_folder)
+    if file_path_folder == '':
+        current_video = VideoInfo(BVnumber, VideoNameShort)
+    else:
+        current_video = VideoInfo(BVnumber, VideoNameShort, file_path_folder)
 
     print(current_video)
 
