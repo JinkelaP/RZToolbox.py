@@ -1,6 +1,7 @@
 #%% Made by RZStudio
 
 # 先全给import了
+from datetime import datetime
 import time
 from json.decoder import JSONDecodeError
 import json
@@ -12,6 +13,7 @@ import urllib.request
 import pandas as pd  # 以下为老三样
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns  # 图表美化
 from pathlib import Path
 
 
@@ -32,7 +34,7 @@ class VideoInfo(object):
         return r'''BV号 BV\#: {}
 简称 Alias: {}
 AV号 AV\#: {}
-导出文件架 Out: {}'''.format(self.bv, self.alias, (self.av if self.av != None else "获取失败 Retrieve failed"), self.out)
+导出文件夹 Out: {}'''.format(self.bv, self.alias, (self.av if self.av != None else "获取失败 Retrieve failed"), self.out)
 
     def get_av(self):
         return bv_to_av(self.bv)
@@ -74,7 +76,7 @@ if __name__ == '__main__':
         BVnumber = input('请填写BV号 Please type the BVID\n') #请填写
         VideoNameShort = input('\n请填写视频简称 Please name your video\n') #请填写视频名字
     
-    file_path_folder = input('\n请填写数据保存路径\nPlease type path of your folder for saving data\nExample: D:\Works\Videodata\n')
+    file_path_folder = input('\n请填写数据保存路径（默认为程序所在路径）\nPlease type path of your folder for saving data\nExample: D:\Works\Videodata\n')
     if file_path_folder == '':
         current_video = VideoInfo(BVnumber, VideoNameShort)
     else:
@@ -95,7 +97,7 @@ if __name__ == '__main__':
         assert current_video.av != None
         dataframes = []
         while True:
-            rand_interval = np.random.randint(5, 10)
+            rand_interval = np.abs(np.random.normal(1800, 60))
             localtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             proxy_support = urllib.request.ProxyHandler(proxy)
             url = "https://api.bilibili.com/archive_stat/stat?aid={}".format(current_video.av) #设置av号 妈的还得转一次
@@ -113,12 +115,17 @@ if __name__ == '__main__':
             if result != "":
                 cnt += 1
 
+            # pandas大法
             data = json.loads(result)['data']
             data['time'] = localtime
             data = pd.DataFrame(data, index=[0])
+            data['time'] = data['time'].astype('datetime64')
+            # 将time列置顶
+            cols = data.columns.tolist()
+            data = data[[cols[-1]] + cols[:-1]]
             dataframes.append(data)
 
-            print("第%s次获取信息 " %cnt)
+            print("\n第%s次获取信息 " %cnt)
             # print(localtime)
             # print(result)
             print(data.to_string(index=False))
@@ -128,17 +135,36 @@ if __name__ == '__main__':
         # 生成dataframe
         df = pd.concat(dataframes, ignore_index=True)
 
-        # 将time列置顶
-        cols = df.columns.tolist()
-        df = df[[cols[-1]] + cols[:-1]]
 
         # 各种导
-        df.to_json(current_video.get_path(create_time, 'json'), orient='records')
-        df.to_excel(current_video.get_path(create_time, 'xlsx'),index=False)
-        df.to_csv(current_video.get_path(create_time, 'csv'),index=False)
+        df.to_json(current_video.get_path('', 'json'), orient='records')
+        df.to_csv(current_video.get_path('', 'csv'),index=False)
+        df.to_excel(current_video.get_path('', 'xlsx'),index=False)
 
+        # 新建两行
+        df['view/like'] = df['view'] / df['like']
+        df['view_trend'] = df['view'].diff()
+        # 画图
+        fig = plt.figure()  # 新建画布
+        sns.set_theme('paper')  # 选择主题
+        sns.set_style("whitegrid")
 
-        print("\n【游戏进度已保存】对面关播了，感谢使用 Gonna say goodbye")
+        # 加两个图 （211 = 2*1排列第1个图，下同）
+        ax0 = fig.add_subplot(211) 
+        ax0.set_title("View / Like")
+        ax0.set_xlabel("Timeline")
+        ax0.set_ylabel("Ratio")
+        ax0.plot(df['time'], df['view/like'])
+
+        ax1 = fig.add_subplot(212)
+        ax1.set_title("Trend per 30min(?)")
+        ax1.set_xlabel("Timeline")
+        ax1.set_ylabel("Views")
+        ax1.plot(df['time'], df['view_trend'])
+
+        print("\n最后10条导出数据:", df.tail(10))
+        print("\n对面关播了，感谢使用 Gonna say goodbye")
+        plt.show()
     except AssertionError: # 没AV号
         print("没AV号你爬你emoji呢")
 #————————————————
