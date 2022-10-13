@@ -1,4 +1,4 @@
-# Made by RZStudio
+#%% Made by RZStudio
 import time
 
 print('Made by RZStudio')
@@ -6,7 +6,7 @@ time.sleep(2)
 print('欢迎使用RZToolbox 0.1.0.3 Welcome! \n')
 time.sleep(3)
 
-#---------------------------------------------------------------------------------------------------------
+#%%---------------------------------------------------------------------------------------------------------
 
 
 BVnumber = input('请填写BV号 Please type the BVID\n') #请填写
@@ -15,11 +15,11 @@ file_path_folder = input('\n请填写数据保存路径\nPlease type path of you
 file_path =  r"{}\{}_{}.txt".format(file_path_folder,BVnumber,VideoNameShort) #txt保存位置
 file_path_json = r"{}\{}_{}_json.txt".format(file_path_folder,BVnumber,VideoNameShort) #txt保存位置
 
-#---------------------------------------
+#%%---------------------------------------
 
 print('\n开始转换BV号 Start BVID transformation...')
 
-#----------------------------------------------------------------------------------------------------------
+#%%----------------------------------------------------------------------------------------------------------
 #因为所知的API太垃圾，所以先bv转av
 
 
@@ -56,7 +56,7 @@ print('对应av号转换成功！:' + bv_to_av(BVnumber))
 AVnumber = bv_to_av(BVnumber)
 
 
-#接下来是爬虫部分
+#%%接下来是爬虫部分
 
 
 from tkinter import N
@@ -72,7 +72,7 @@ cnt = 0
 
 GapBtw = 1800+random.randint(-60,60) #间隔x+random.randint(a,b) 秒钟，使用random.randint增加随机量
 
-#每一次记录的开头
+#%%每一次记录的开头
 f = open(file_path,mode='a',encoding='utf-8')
 f.write("本次记录开始_开始时间是 ")
 f.write(localtime)
@@ -82,10 +82,10 @@ f.close()
 #----------------------------------------------
 
 
-#开头结束
+#%%开头结束
 
 
-#隐藏自己爬虫的身份的第一种策略是设置访问周期，使得程序更像是人为访问的
+#%%隐藏自己爬虫的身份的第一种策略是设置访问周期，使得程序更像是人为访问的
 while True: #每隔 x+random.randint(-120,120) 秒钟访问一次指定视频的数据API
     
     localtimeB = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
