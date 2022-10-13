@@ -1,5 +1,0 @@
-本次记录开始_开始时间是 Thu Oct 13 11:03:51 2022 祝发达~
-2022-10-13 11:03:51
-{"code":0,"message":"0","ttl":1,"data":{"aid":584215068,"view":36308,"danmaku":32,"reply":246,"favorite":873,"coin":533,"share":144,"now_rank":0,"his_rank":0,"like":1071,"dislike":0,"no_reprint":1,"copyright":1}}
-2022-10-13 11:04:45
-{"code":0,"message":"0","ttl":1,"data":{"aid":584215068,"view":36308,"danmaku":32,"reply":246,"favorite":873,"coin":533,"share":144,"now_rank":0,"his_rank":0,"like":1071,"dislike":0,"no_reprint":1,"copyright":1}}
